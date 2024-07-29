@@ -72,3 +72,14 @@ First, let's cat To_agentJ.txt:
 Ok, I tried exiftool and strings on cute-alien.jpg but didn't yield anything. Then I tried steghide, but it prompts for a password, so let's attack it with stegcracker:
 
 ![stegcracker](https://github.com/user-attachments/assets/e9a29a66-dd5d-450b-8d44-23411b21025f)
+
+While stegcracker is running, let's investigate cutie.png.
+First, I tried exiftool and strings on it, and strings revealed an embedded txt file:
+```bash
+strings cutie.png
+```
+![strings cutie](https://github.com/user-attachments/assets/aacac05e-b801-4149-b036-6e2a295ea515)
+
+Now, let's try binwalk on it:
+
+![binwalk](https://github.com/user-attachments/assets/49a337c8-972f-4ebf-94c8-e629a1379699)
