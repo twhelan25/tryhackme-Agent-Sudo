@@ -126,7 +126,19 @@ After running sudo -l to check jame's privileges, we see james can run:
 (ALL, !root) /bin/bash
 This means james cannot run /bin/bash as root, but ALL implies that he can run /bin/bash as any user. In a case like this, it's a good idea to google it, especially when the question is asking for the cve #.
 I clicked the result that contains sudo 1.8.27 - Security Bypass. I pasted in this cve and it is correct!
-I 
+I then ran sudo -V to check the sudo version:
+
+
+![sudo -V](https://github.com/user-attachments/assets/8593f750-0ada-4c3b-9641-d1185ad204bd)
+
+This sudo version is in the vulnerable range and fits the description like a glove!
+I ran the exploit:
+```bash
+sudo -u#-1 /bin/bash
+```
+James has now escalted to root!
+Now, just cat root.txt to answer the last two questions.
+I hope you enjoyed this room and learned a lot!
 
 
 
