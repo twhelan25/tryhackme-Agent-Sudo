@@ -83,3 +83,16 @@ strings cutie.png
 Now, let's try binwalk on it:
 
 ![binwalk](https://github.com/user-attachments/assets/49a337c8-972f-4ebf-94c8-e629a1379699)
+
+binwalk extracted a new directory _cutie.png.extracted.
+In this directory we see the encryped 8702.zip file. We will need to crack it by first using zip2john, then john to crack the resulting hash:
+
+
+![zip2john](https://github.com/user-attachments/assets/81d435d3-1d32-4a9e-99c7-5ecdb27341cc)
+Now that we have the password, we'll use the tool 7z to extract the contents:
+```bash
+7z e 8702.zip
+```
+
+
+
