@@ -1,3 +1,5 @@
+![intro](https://github.com/user-attachments/assets/f0320ee6-9e24-44cf-bf4d-98c32338a829)
+
 # tryhackme-Agent-Sudo
 This is a walkthrough for the tryhackme CTF Agent Sudo. I will not provide any flags or passwords as this is intended to be used as a guide.
 
@@ -32,5 +34,11 @@ First, let's investigate the websever on port 80.
 We are greeted with a message from Agent R:
 
 ![agent R](https://github.com/user-attachments/assets/6277fcae-9082-4506-a524-d4d8036d2b0c)
+
+The User-Agent is a crucial part of the HTTP headers sent with every request. It helps servers identify the application, operating system, vendor, and version of the requesting user agent. In this case we can assume that agent R is one of the code names. Let's try spoofing as user-agent R on this url. 
+```bash
+curl -A "R" -L $ip
+```
+
 
 
