@@ -85,7 +85,7 @@ Now, let's try binwalk on it:
 ![binwalk](https://github.com/user-attachments/assets/49a337c8-972f-4ebf-94c8-e629a1379699)
 
 binwalk extracted a new directory _cutie.png.extracted.
-In this directory we see the encryped 8702.zip file. We will need to crack it by first using zip2john, then john to crack the resulting hash:
+In this directory we see the encryped 8702.zip file. Another thing to take note of, is that To_agentJ.txt is currently empty, because it's contents haven't been extracted. We will need to crack the zip file by first using zip2john, then john to crack the resulting hash:
 
 
 ![zip2john](https://github.com/user-attachments/assets/81d435d3-1d32-4a9e-99c7-5ecdb27341cc)
@@ -93,6 +93,40 @@ Now that we have the password, we'll use the tool 7z to extract the contents:
 ```bash
 7z e 8702.zip
 ```
+
+Now, let's read To_agentJ.txt. It reveals a message from Agent R. This string appears to be base64 encoded, so we'll need to decode it:
+
+![base64 -d](https://github.com/user-attachments/assets/31c31d75-89da-40f2-95c7-8f2aca19ed5b)
+
+Now, let's check back on the jpg file that's now been cracked using stegcracker:
+
+![stegcracker_result](https://github.com/user-attachments/assets/88edafc7-9d8b-4974-83a5-e62ea715a570)
+It reveals a message from chris and contains the username and password.
+Great! Let's try to ssh onto the target with these credentials:
+```bash
+ssh james@$ip
+```
+
+We are now logged in via ssh as james, and the user flag is in his home directory.
+
+There is also the question about the photo- Alien_autospy.jpg.
+Let's tranfer this from the target machine to our attack box. Run this command from the target machine, from the jame's home directory:
+```bash
+python3 -m http.server
+```
+And wget from the attack box to get it, replace $ip with actual target IP:
+```bash
+wget http://$ip:8000/Alien_autospy.jpg
+```
+Now that we have the jpg, go to https://images.google.com/, and upload the jpg. 
+Search the results and, as per the hint, keep an eye out for the foxnews site to get the answer.
+
+# Privilege Escalation
+After running sudo -l to check jame's privileges, we see james can run:
+(ALL, !root) /bin/bash
+This means james cannot run /bin/bash as root, but ALL implies that he can run /bin/bash as any user. In a case like this, it's a good idea to google it, especially when the question is asking for the cve #.
+I clicked the result that contains sudo 1.8.27 - Security Bypass. I pasted in this cve and it is correct!
+I 
 
 
 
