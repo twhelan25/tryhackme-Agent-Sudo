@@ -24,4 +24,13 @@ Command break down:
 
 -oN nmap.txt: This option specifies normal output that should be saved to a file named “nmap.txt.
 
-This scan reveals two open ports:
+This scan reveals three open ports:
+
+![nmap](https://github.com/user-attachments/assets/eccc0012-bd2f-408e-99c1-5a3f32620794)
+
+First, let's investigate the websever on port 80.
+We are greeted with a message from Agent R:
+
+![agent R](https://github.com/user-attachments/assets/6277fcae-9082-4506-a524-d4d8036d2b0c)
+
+
