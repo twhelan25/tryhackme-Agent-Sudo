@@ -39,6 +39,36 @@ The User-Agent is a crucial part of the HTTP headers sent with every request. It
 ```bash
 curl -A "R" -L $ip
 ```
+Command explanation:
+-A let's use specify the user agent "R"
+-L will follow redirects
+
+We get a different response:
+
+![agent R response](https://github.com/user-attachments/assets/a9312aa2-68ff-464e-a19b-d852219dc0e5)
+
+This reponse gives us the hint that since there are 25 user-agents, and 26 letters in the alphabet, and agent R is one of them, that the user agent is most likely one of the other letters. Let's try the same command replacing "R" with "A", "B" and so on.
+
+We get the same result until we try user-agent "C":
+
+![agent C ](https://github.com/user-attachments/assets/802c4f48-6b83-4045-af41-c9a0f1ca7ae3)
+
+This gives us the answer to question about the user name, chris. It also alerts us to the fact that agent C has a weak password, so we should attempt a dictionary attack with hydra and the wordlist rockyou.txt. Looking back our nmap scan, the password will most likely be for ftp or ssh. I attempted anonymous login to ftp: ftp $ip, but it prompted for a password, so let's try the password attack on the ftp server:
+```bash
+hydra -l chris -P /usr/share/wordlists/rockyou.txt $ip ftp
+```
+After about a minute, I hydra revealed the ftp password. Let's go ahead and log into the ftp server as chris:
+
+![ftp](https://github.com/user-attachments/assets/680a6191-3213-4c78-8a7a-516c51a7aa33)
+
+We're in! Let's use the get command to get this image files onto our machine:
+```bash
+get <file name>
+```
+First, let's cat To_agentJ.txt:
 
 
+![To_agentJ txt](https://github.com/user-attachments/assets/ae98bb71-b5fa-4334-8ece-d8915c72bcaf)
+Ok, I tried exiftool and strings on cute-alien.jpg but didn't yield anything. Then I tried steghide, but it prompts for a password, so let's attack it with stegcracker:
 
+![stegcracker](https://github.com/user-attachments/assets/e9a29a66-dd5d-450b-8d44-23411b21025f)
