@@ -49,7 +49,37 @@ We get a different response:
 
 This reponse gives us the hint that since there are 25 user-agents, and 26 letters in the alphabet, and agent R is one of them, that the user agent is most likely one of the other letters. Let's try the same command replacing "R" with "A", "B" and so on.
 
-We get the same result until we try user-agent "C":
+I wrote a bash script to use the cmd curl -A 'x' $ip -L that will loop through capital letters A to Z, get an MD5 hash of the curl response, then checks if the current response is different from the previous one, if the response is different it prints the User-Agent, response hash, and full curl output. If the response is the same as the previous one, it skips to the next letter without ouput.
+
+![user-agent sh](https://github.com/user-attachments/assets/d0b94486-efcc-4996-920b-def30dc28daa)
+
+```
+bash
+#!/bin/bash
+
+# Function to get MD5 hash of cu response
+get_response_hash() {
+        curl -s -A "$1" $ip -L | md5sum | awk '{print $1}'
+}
+
+# Loop through capital letters A to Z
+for letter in {A..Z}; do
+        current_response=$(get_response_hash "$letter")
+
+        if [ "$first_run" = true ] || [ "$current_response" != "$previous_response" ]; then
+                echo "User-Agent: $letter"
+                echo "Response hash: $current_response"
+                curl -A "$letter" $ip -L
+                echo -e "\n----------\n"
+
+
+                previous_response=$current_response
+                first_run=false
+        fi
+done
+```
+
+
 
 ![agent C ](https://github.com/user-attachments/assets/802c4f48-6b83-4045-af41-c9a0f1ca7ae3)
 
