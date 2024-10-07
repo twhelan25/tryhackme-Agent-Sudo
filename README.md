@@ -79,11 +79,10 @@ for letter in {A..Z}; do
 done
 ```
 
+![user-agent-response](https://github.com/user-attachments/assets/be8d6a1b-3929-4857-9a54-b4efef2b9955)
 
 
-![agent C ](https://github.com/user-attachments/assets/802c4f48-6b83-4045-af41-c9a0f1ca7ae3)
-
-This gives us the answer to question about the user name, chris. It also alerts us to the fact that agent C has a weak password, so we should attempt a dictionary attack with hydra and the wordlist rockyou.txt. Looking back our nmap scan, the password will most likely be for ftp or ssh. I attempted anonymous login to ftp: ftp $ip, but it prompted for a password, so let's try the password attack on the ftp server:
+This script returns a few results, one of which shows use that the correct user-agent is C. It also alerts us to the fact that agent C has a weak password, so we should attempt a dictionary attack with hydra and the wordlist rockyou.txt. Looking back our nmap scan, the password will most likely be for ftp or ssh. I attempted anonymous login to ftp: ftp $ip, but it prompted for a password, so let's try the password attack on the ftp server:
 ```bash
 hydra -l chris -P /usr/share/wordlists/rockyou.txt $ip ftp
 ```
