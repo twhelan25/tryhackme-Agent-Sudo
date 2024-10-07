@@ -57,7 +57,7 @@ I wrote a bash script to use the cmd curl -A 'x' $ip -L that will loop through c
 bash
 #!/bin/bash
 
-# Function to get MD5 hash of cu response
+# Function to get MD5 hash of curl response
 get_response_hash() {
         curl -s -A "$1" $ip -L | md5sum | awk '{print $1}'
 }
